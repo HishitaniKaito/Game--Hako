@@ -1,21 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
-public class Warp : MonoBehaviour
+public class SceneChange : MonoBehaviour
 {
-    [SerializeField] GameObject pos;
-    [SerializeField] Player P = null;
-    public void OnCollisionEnter(Collision collision)
-    {
-        P.worp(pos.transform.position);
-    }
+    [SerializeField]string scenename;
+
     // Start is called before the first frame update
     void Start()
     {
         
+
     }
 
+
+    public void Load(string scenename)
+    {
+        SceneManager.LoadScene(scenename);
+    }
     // Update is called once per frame
     void Update()
     {

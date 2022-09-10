@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         {
             Rb.AddForce(Vector3.forward * Moves * -1);
         }
-        RaycastHit hit;
+        /*RaycastHit hit;
         if (Input.GetKey(KeyCode.S))
         {
             if (Physics.Raycast(ray, out hit))
@@ -61,6 +61,7 @@ public class Player : MonoBehaviour
             }
 
         }
+        */
 
     }
     private void OnCollisionEnter(Collision collision)
