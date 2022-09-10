@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("ray‚Í‹@”\‚µ‚Ä‚¢‚é");
 
-                if (hit.collider.gameObject.name == "MoteruJimen")
+                if (hit.collider.gameObject.name == "buttai")
                 {
                     Debug.Log("‚Ä‚é‚â‚ÂŠ´’m");
                 }
