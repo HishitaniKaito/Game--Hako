@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneChange : MonoBehaviour
 {
-    [SerializeField]string scenename;
+    string scenename;
 
     // Start is called before the first frame update
     void Start()
