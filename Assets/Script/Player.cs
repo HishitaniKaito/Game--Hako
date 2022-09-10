@@ -7,10 +7,10 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
 
     public float jump = 1;
-    public float Moves = 1;
+    public float Move = 1;
     [SerializeField] Rigidbody Rb;
     [SerializeField] int Hp = 100;
-    [SerializeField] int Jcount;
+    int Jcount;
     [SerializeField] int JcountLimit;
     void Start()
     {
@@ -33,21 +33,21 @@ public class Player : MonoBehaviour
         //ç∂âEÇ÷ÇÃà⁄ìÆ
         if (Input.GetKey(KeyCode.A))
         {
-            Rb.AddForce(Vector3.right * (Moves * -1));
+            Rb.AddForce(Vector3.right * (Move * -1));
         }
         if (Input.GetKey(KeyCode.D))
         {
-            Rb.AddForce(Vector3.right * Moves);
+            Rb.AddForce(Vector3.right * Move);
         }
         if (Input.GetKey(KeyCode.W))
         {
-            Rb.AddForce(Vector3.forward * Moves);
+            Rb.AddForce(Vector3.forward * Move);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            Rb.AddForce(Vector3.forward * Moves * -1);
+            Rb.AddForce(Vector3.forward * Move * -1);
         }
-        RaycastHit hit;
+        /*RaycastHit hit;
         if (Input.GetKey(KeyCode.S))
         {
             if (Physics.Raycast(ray, out hit))
@@ -61,10 +61,13 @@ public class Player : MonoBehaviour
             }
 
         }
+        */
 
+        
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.name == "jimen")
         Jcount = JcountLimit;
     }
     public void worp(Vector3 wpos)
@@ -72,4 +75,16 @@ public class Player : MonoBehaviour
         this.gameObject.transform.position = wpos;
     }
 
+
+    public void GameOver()
+    {
+
+    }
+    public void Damege()
+    {
+        if (Hp <= 0)
+        {
+            GameOver();
+        }
+    }
 }

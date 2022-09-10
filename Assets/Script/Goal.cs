@@ -2,14 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Warp : MonoBehaviour
+public class Goal : MonoBehaviour
 {
-    [SerializeField] GameObject pos;
-    [SerializeField] Player P = null;
-    public void OnCollisionEnter(Collision collision)
-    {
-        P.worp(pos.transform.position);
-    }
+    [SerializeField] SceneChange change;
+    string name = "Success Scene";
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +16,9 @@ public class Warp : MonoBehaviour
     void Update()
     {
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        change.Load(name);
     }
 }
