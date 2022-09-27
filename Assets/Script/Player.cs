@@ -5,32 +5,31 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     // Start is called before the first frame update
-
-    public float jump = 1;
-    public float Move = 1;
+     
+    [SerializeField] float jump = 1;//ジャンプ力
+    [SerializeField] float Move = 1;//移動速度
     [SerializeField] Rigidbody Rb;
-    [SerializeField] int Hp = 100;
-    int Jcount;
-    [SerializeField] int JcountLimit;
+    [SerializeField] int Hp = 10;//体力
+    [SerializeField] int JcountLimit;//連続でジャンプできる回数
+    [SerializeField] SceneChange Change;
+    int Jcount = 0;//ジャンプした回数
+    float timer;
+    float interval = 1.0f;//ダメージを受けた後、次のダメージを受けるまでの猶予時間
     void Start()
     {
-        Jcount = JcountLimit;
+
     }
 
     // Update is called once per frame
     void Update()
-    {
-        Vector3 Ppos = this.transform.position;//プレイヤーの位置
-        Vector3 direction = new Vector3(0, -1, 0);//Y軸方向表すベクトル
-        Ray ray = new Ray(Ppos, direction);//地面を感知するrayの生成
-        Debug.DrawRay(Ppos, direction, Color.black, 0.01f, false);
-        if (Input.GetKeyDown(KeyCode.Space) && Jcount > 0)
+    { 
+        if (Input.GetKeyDown(KeyCode.Space) && Jcount < JcountLimit)
         {
             Rb.AddForce(Vector3.up * jump, ForceMode.Impulse);//飛ぶ動作
             Debug.Log("Jump");
-            Jcount--;
+            Jcount++;
         }
-        //左右への移動
+        //前後左右への移動
         if (Input.GetKey(KeyCode.A))
         {
             Rb.AddForce(Vector3.right * (Move * -1));
@@ -47,44 +46,41 @@ public class Player : MonoBehaviour
         {
             Rb.AddForce(Vector3.forward * Move * -1);
         }
-        /*RaycastHit hit;
-        if (Input.GetKey(KeyCode.S))
+        timer += Time.deltaTime;
+    }
+    private void OnCollisionEnter(Collision collision)//地面についたらJcountをリセットする
+    {
+        if (collision.gameObject.name == "jimen")
         {
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.Log("rayは機能している");
-
-                if (hit.collider.gameObject.name == "buttai")
-                {
-                    Debug.Log("持てるやつ感知");
-                }
-            }
-
+            Jcount = 0;
         }
-        */
-
-        
     }
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider other)//ダメージ床に触れている時の処理
     {
-        if(collision.gameObject.name == "jimen")
-        Jcount = JcountLimit;
-    }
-    public void worp(Vector3 wpos)
-    {
-        this.gameObject.transform.position = wpos;
-    }
-
-
-    public void GameOver()
-    {
-
+        if (other.gameObject.name == "Damage")
+        {
+            Damege();
+        }
     }
     public void Damege()
     {
-        if (Hp <= 0)
+        if(timer > interval)//無敵時間の処理。intervalよりもtimerの値が大きかったらダメージを受ける
         {
-            GameOver();
+            Hp--;
+            if (Hp <= 0)
+            {
+                GameOver();
+                //ダメージを受けてHpが0になったらゲームオーバーの処理を行う
+            }
+            timer = 0.0f;
         }
+        
     }
+    public void GameOver()
+    {
+        //ゲームオーバーの画面へ移動する
+        string name = "Fail Scene";
+        Change.Load(name);
+    }
+    
 }
