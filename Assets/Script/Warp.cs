@@ -5,20 +5,9 @@ using UnityEngine;
 public class Warp : MonoBehaviour
 {
     [SerializeField] GameObject pos;
-    [SerializeField] Player P = null;
     public void OnCollisionEnter(Collision collision)
     {
-        P.worp(pos.transform.position);
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        collision.gameObject.transform.position = pos.transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -4,21 +4,47 @@ using UnityEngine;
 
 public class key : MonoBehaviour
 {
-    [SerializeField] GameObject doa;
+    [SerializeField] GameObject door;
     // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameObject maintransform;
+    [SerializeField] GameObject point;
+    float timer;
+    bool doordelete = false;
+    
+    private void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        maintransform.transform.position = point.transform.position;
+        maintransform.transform.rotation = point.transform.rotation;
     }
     private void OnCollisionEnter(Collision collision)
     {
-        doa.active = false;
-        this.gameObject.active = false;
+        //door.active = false;
+       // this.gameObject.active = false;
+        timer = 0;
+        doordelete = true;
+    }
+    private void Update()
+    {
+        
+        if(doordelete)
+        {
+            maintransform.transform.position = new Vector3(door.transform.position.x, door.transform.position.y, door.transform.position.z - 3);
+            maintransform.transform.rotation = door.transform.rotation;
+            timer += Time.deltaTime;
+
+            if (timer > 1.0f && this.gameObject.active)
+            {
+                door.active = false;
+                //this.gameObject.active = false;
+                timer = 0;
+
+            }else if(timer > 0.5f && door.active == false)
+            {
+                maintransform.transform.position = point.transform.position;
+                maintransform.transform.rotation = point.transform.rotation;
+                doordelete = false;
+                this.gameObject.active = false;
+            }
+        }
     }
 }
