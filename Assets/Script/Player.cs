@@ -15,9 +15,14 @@ public class Player : MonoBehaviour
     int Jcount = 0;//ジャンプした回数
     float timer;
     float interval = 1.0f;//ダメージを受けた後、次のダメージを受けるまでの猶予時間
+    [SerializeField] Animator Muteki;
+    [SerializeField] Material _Muteki;
+    [SerializeField] Material _NoneMaterial;
+    Renderer Rend;
     void Start()
     {
-
+        Rend = this.gameObject.GetComponent<Renderer>();
+        Muteki = this.gameObject.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -47,6 +52,10 @@ public class Player : MonoBehaviour
             Rb.AddForce(Vector3.forward * Move * -1);
         }
         timer += Time.deltaTime;
+        if(timer > interval)
+        {
+            Rend.material = _NoneMaterial;
+        }
     }
     private void OnCollisionEnter(Collision collision)//地面についたらJcountをリセットする
     {
@@ -60,11 +69,12 @@ public class Player : MonoBehaviour
         if (other.gameObject.name == "Damage")
         {
             Damege();
+
         }
     }
     public void Damege()
     {
-        if(timer > interval)//無敵時間の処理。intervalよりもtimerの値が大きかったらダメージを受ける
+        if (timer > interval)//無敵時間の処理。intervalよりもtimerの値が大きかったらダメージを受ける
         {
             Hp--;
             if (Hp <= 0)
@@ -73,8 +83,12 @@ public class Player : MonoBehaviour
                 //ダメージを受けてHpが0になったらゲームオーバーの処理を行う
             }
             timer = 0.0f;
+
         }
-        
+        else
+        {
+            Rend.material = _Muteki;
+        }
     }
     public void GameOver()
     {
