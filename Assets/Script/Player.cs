@@ -34,8 +34,11 @@ public class Player : MonoBehaviour
             Debug.Log("Jump");
             Jcount++;
         }
+        var h = Input.GetAxis("Horizontal");
+        var v = Input.GetAxis("Vertical");
+        Rb.AddForce(h * Move, 0, v * Move);
         //‘OŒã¶‰E‚Ö‚ÌˆÚ“®
-        if (Input.GetKey(KeyCode.A))
+        /*if (Input.GetKey(KeyCode.A))
         {
             Rb.AddForce(Vector3.right * (Move * -1));
         }
@@ -51,6 +54,7 @@ public class Player : MonoBehaviour
         {
             Rb.AddForce(Vector3.forward * Move * -1);
         }
+        */
         timer += Time.deltaTime;
         if(timer > interval)
         {
