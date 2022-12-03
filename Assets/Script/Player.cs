@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     float interval = 1.0f;//ダメージを受けた後、次のダメージを受けるまでの猶予時間
     [SerializeField] Material _Muteki;
     [SerializeField] Material _NoneMaterial;
+    [SerializeField] Camera _PlayerCamera;
     Renderer _Rend;
     void Start()
     {
@@ -36,6 +37,8 @@ public class Player : MonoBehaviour
         var h = Input.GetAxis("Horizontal");
         var v = Input.GetAxis("Vertical");
         Rb.AddForce(h * Move, 0, v * Move);
+        _PlayerCamera.transform.position = new Vector3(transform.position.x,transform.position.y+6,transform.position.z-6);
+        _PlayerCamera.transform.rotation = Quaternion.Euler(45,0,0);
         /*前後左右への移動(旧)
         if (Input.GetKey(KeyCode.A))
         {
