@@ -9,7 +9,7 @@ public class key : MonoBehaviour
     [SerializeField] GameObject maintransform;
     [SerializeField] GameObject point;
     float timer;
-    bool doordelete = false;
+    public bool doordelete = false;
     
     private void Start()
     {
@@ -32,7 +32,7 @@ public class key : MonoBehaviour
             maintransform.transform.rotation = door.transform.rotation;
             timer += Time.deltaTime;
 
-            if (timer > 1.0f && this.gameObject.active)
+            if (timer > 1.0f && gameObject.active)
             {
                 door.active = false;
                 //this.gameObject.active = false;

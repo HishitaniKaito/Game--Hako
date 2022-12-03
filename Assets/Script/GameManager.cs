@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text _timerText;
     [SerializeField] TMP_Text _hpText;
     [SerializeField] Player _player;
+    [SerializeField]public key[] _Keys;
     int _minits = 0;
     // Start is called before the first frame update
     void Start()

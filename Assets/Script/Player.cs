@@ -19,9 +19,11 @@ public class Player : MonoBehaviour
     [SerializeField] Material _NoneMaterial;
     [SerializeField] Camera _PlayerCamera;
     Renderer _Rend;
+    GameManager _Gm;
     void Start()
     {
         _Rend = this.gameObject.GetComponent<Renderer>();
+        _Gm = FindObjectOfType<GameManager>();
     }
 
     // Update is called once per frame
@@ -37,8 +39,19 @@ public class Player : MonoBehaviour
         var h = Input.GetAxis("Horizontal");
         var v = Input.GetAxis("Vertical");
         Rb.AddForce(h * Move, 0, v * Move);
-        _PlayerCamera.transform.position = new Vector3(transform.position.x,transform.position.y+6,transform.position.z-6);
-        _PlayerCamera.transform.rotation = Quaternion.Euler(45,0,0);
+        if(_Gm._Keys.Length == 0)
+        {
+            _PlayerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 6, transform.position.z - 6);
+            _PlayerCamera.transform.rotation = Quaternion.Euler(45, 0, 0);
+        }
+        for(int i = 0; i < _Gm._Keys.Length; i++)
+        {
+            if(_Gm._Keys[i].doordelete == false)
+            {
+                _PlayerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 6, transform.position.z - 6);
+                _PlayerCamera.transform.rotation = Quaternion.Euler(45, 0, 0);
+            }
+        }
         /*‘OŒã¶‰E‚Ö‚ÌˆÚ“®(‹Œ)
         if (Input.GetKey(KeyCode.A))
         {
