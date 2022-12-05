@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [SerializeField] Rigidbody Rb;
     [SerializeField] public int Hp = 10;//体力
     [SerializeField] int JcountLimit;//連続でジャンプできる回数
-    [SerializeField] SceneChange Change;
     int Jcount = 0;//ジャンプした回数
     float timer;
     float interval = 1.0f;//ダメージを受けた後、次のダメージを受けるまでの猶予時間
@@ -97,7 +96,7 @@ public class Player : MonoBehaviour
             Hp--;
             if (Hp <= 0)
             {
-                GameOver();//ダメージを受けてHpが0になったらゲームオーバーの処理を行う
+                _Gm.GameOver();//ダメージを受けてHpが0になったらゲームオーバーの処理を行う
             }
             timer = 0.0f;
         }
@@ -105,12 +104,5 @@ public class Player : MonoBehaviour
         {
             _Rend.material = _Muteki;//無敵状態用のマテリアルに変化
         }
-    }
-    public void GameOver()
-    {
-        //ゲームオーバーの画面へ移動する
-        string name = "Fail Scene";
-        Change.Load(name);
-    }
-    
+    }   
 }
