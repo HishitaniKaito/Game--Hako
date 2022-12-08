@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
         _timerText.text = $"Œo‰ßŽžŠÔ:{_minits:00}•ª{_timer:00}•b";
         _hpText.text = $"‘Ì—Í:{_player.Hp}";
     }
-
     public void GameOver()
     {
         string _name = "";
